@@ -2,82 +2,93 @@ import random
 import json
 import pickle
 import numpy as np
-import nltk
-from nltk.stem import WordNetLemmatizer
+import tensorflow as tf
+from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
-from tensorflow.keras.optimizers import SGD
+from tensorflow.keras.layers import Dense, LSTM, Embedding, Dropout
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
+
+# Download required NLTK data
+nltk.download('punkt')
+nltk.download('wordnet')
 
 lemmatizer = WordNetLemmatizer()
 
-# Load intents
-intents = json.loads(open('intents.json').read())
+# Load and preprocess data
+with open('intents.json', 'r') as file:
+    intents = json.load(file)
 
 words = []
 classes = []
 documents = []
 ignore_letters = ['?', '!', '.', ',']
 
-# Process intents
 for intent in intents['intents']:
     for pattern in intent['patterns']:
-        word_list = nltk.word_tokenize(pattern)
+        word_list = word_tokenize(pattern)
         words.extend(word_list)
         documents.append((word_list, intent['tag']))
         if intent['tag'] not in classes:
             classes.append(intent['tag'])
 
-# Lemmatize and sort words
-words = [lemmatizer.lemmatize(word) for word in words if word not in ignore_letters]
+words = [lemmatizer.lemmatize(word.lower()) for word in words if word not in ignore_letters]
 words = sorted(set(words))
-
-# Sort classes
 classes = sorted(set(classes))
 
-# Save words and classes
+# Save preprocessed data
 pickle.dump(words, open('words.pkl', 'wb'))
 pickle.dump(classes, open('classes.pkl', 'wb'))
 
 # Prepare training data
-training = []
-output_empty = [0] * len(classes)
+X = []
+y = []
 
-for document in documents:
-    bag = [0] * len(words)
-    word_patterns = document[0]
-    word_patterns = [lemmatizer.lemmatize(word.lower()) for word in word_patterns]
-    for word in word_patterns:
-        if word in words:
-            bag[words.index(word)] = 1
+for doc in documents:
+    bag = []
+    word_patterns = [lemmatizer.lemmatize(word.lower()) for word in doc[0]]
+    for word in words:
+        bag.append(1 if word in word_patterns else 0)
     
-    output_row = list(output_empty)
-    output_row[classes.index(document[1])] = 1
-    training.append([bag, output_row])
+    X.append(bag)
+    y.append(classes.index(doc[1]))
 
-# Shuffle and convert to numpy array
-random.shuffle(training)
+X = np.array(X)
+y = np.array(y)
 
-# Convert to numpy array
-training = np.array(training, dtype=object)
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-train_x = np.array([x[0] for x in training])
-train_y = np.array([x[1] for x in training])
+# Convert labels to one-hot encoded format
+label_encoder = LabelEncoder()
+y_train_encoded = tf.keras.utils.to_categorical(label_encoder.fit_transform(y_train))
+y_test_encoded = tf.keras.utils.to_categorical(label_encoder.transform(y_test))
 
-# Build model
-model = Sequential()
-model.add(Dense(128, input_shape=(len(train_x[0]), ), activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(64, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(len(train_y[0]), activation='softmax'))
+# Build the model
+model = Sequential([
+    Dense(256, input_shape=(len(X_train[0]),), activation='relu'),
+    Dropout(0.5),
+    Dense(128, activation='relu'),
+    Dropout(0.5),
+    Dense(64, activation='relu'),
+    Dropout(0.5),
+    Dense(len(classes), activation='softmax')
+])
 
-# Compile model
-sgd = SGD(learning_rate=0.01, decay=1e-6, momentum=0.9, nesterov=True)
-model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+# Compile the model
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-# Train model
-model.fit(train_x, train_y, epochs=200, batch_size=5, verbose=1)
+# Train the model
+early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
+history = model.fit(X_train, y_train_encoded, epochs=200, batch_size=32, validation_split=0.1, callbacks=[early_stopping])
 
-# Save model
-model.save('chatbot_model.keras')
-print("Works!")
+# Evaluate the model
+test_loss, test_accuracy = model.evaluate(X_test, y_test_encoded)
+print(f"Test accuracy: {test_accuracy:.4f}")
+
+# Save the model
+model.save('chatbot_model_advanced.keras')

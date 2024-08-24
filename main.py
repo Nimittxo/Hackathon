@@ -2,23 +2,25 @@ import random
 import json
 import pickle
 import numpy as np
-import nltk
-
-from nltk.stem import WordNetLemmatizer
+import tensorflow as tf
 from tensorflow.keras.models import load_model
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
 
+\
 lemmatizer = WordNetLemmatizer()
 
-
-intents = json.loads(open('intents.json').read())
+# Load data and model
+with open('intents.json', 'r') as file:
+    intents = json.load(file)
 words = pickle.load(open('words.pkl', 'rb'))
 classes = pickle.load(open('classes.pkl', 'rb'))
-
-model = load_model('chatbot_model.keras')
+model = load_model('chatbot_model_advanced.keras')
 
 def clean_up_sentence(sentence):
-    sentence_words = nltk.word_tokenize(sentence)
-    sentence_words = [lemmatizer.lemmatize(word) for word in sentence_words]
+    sentence_words = word_tokenize(sentence)
+    sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
     return sentence_words
 
 def bag_of_words(sentence):
@@ -43,6 +45,9 @@ def predict_class(sentence):
     return return_list
 
 def get_response(intents_list, intents_json):
+    if not intents_list:
+        return "I'm not sure how to respond to that. Can you please rephrase or ask something else?"
+    
     tag = intents_list[0]['intent']
     list_of_intents = intents_json['intents']
     for i in list_of_intents:
@@ -51,10 +56,16 @@ def get_response(intents_list, intents_json):
             break
     return result
 
-print("Success!")
+print("Chatbot is ready to chat! (Type 'quit' to exit)")
 
+# Loop to keep the chatbot running and accepting user input
 while True:
-    message = input("")
+    message = input("You: ")
+    if message.lower() == 'quit':
+        break
+    
     ints = predict_class(message)
     res = get_response(ints, intents)
-    print(res)
+    print("Bot:", res)
+
+print("Chatbot session ended.")

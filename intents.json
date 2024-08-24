@@ -2,25 +2,8 @@
     {
         "tag": "greetings",
         "patterns": [
-            "hello",
-            "hi",
-            "hey",
-            "how are you",
-            "greetings",
-            "what's up",
-            "how is it going?",
-            "howdy",
-            "hi there",
-            "hey there",
-            "what's good?",
-            "what's new?",
-            "how's everything?",
-            "how have you been?",
-            "good to see you",
-            "long time no see",
-            "yo",
-            "how's it going?",
-            "how are things?",
+            "hello","hi","hey","how are you","greetings","what's up","how is it going?","howdy","hi there","hey there","what's good?",
+            "what's new?","how's everything?","how have you been?","good to see you","long time no see","yo","how's it going?","how are things?",
             "what's happening?"
         ],
         "responses": [
@@ -191,6 +174,133 @@
             "Mr. Narendra Modi is the political leader and Prime Minister of India.",
             "Narendra Modi serves as the Prime Minister of India."
         ]
-    }
+    }, 
+    {
+        "tag": "Ministry of Defence",
+        "patterns": [
+          "Who is the Defence Minister?",
+          "Who is the Minister of Defence in India?",
+          "Who heads the Ministry of Defence?",
+          "Defence Minister of India"
+        ],
+        "responses": [
+          "Shri Raj Nath Singh is the Minister of Defence.",
+          "The Ministry of Defence is headed by Shri Raj Nath Singh.",
+          "Shri Raj Nath Singh is responsible for the Ministry of Defence."
+        ]
+      },
+      {
+        "tag": "Ministry of Home Affairs",
+        "patterns": [
+          "Who is the Home Minister?",
+          "Who is the Minister of Home Affairs?",
+          "Who leads the Ministry of Home Affairs?",
+          "Home Minister of India"
+        ],
+        "responses": [
+          "Shri Amit Shah is the Minister of Home Affairs.",
+          "The Ministry of Home Affairs is led by Shri Amit Shah.",
+          "Shri Amit Shah is in charge of the Ministry of Home Affairs."
+        ]
+      },
+      {
+        "tag": "Ministry of Finance",
+        "patterns": [
+          "Who is the Finance Minister?",
+          "Who is the Minister of Finance?",
+          "Who heads the Ministry of Finance?",
+          "Finance Minister of India"
+        ],
+        "responses": [
+          "Smt. Nirmala Sitharaman is the Minister of Finance.",
+          "The Ministry of Finance is headed by Smt. Nirmala Sitharaman.",
+          "Smt. Nirmala Sitharaman oversees the Ministry of Finance."
+        ]
+      },
+      {
+        "tag": "Ministry of External Affairs",
+        "patterns": [
+          "Who is the External Affairs Minister?",
+          "Who is the Minister of External Affairs?",
+          "Who leads the Ministry of External Affairs?",
+          "External Affairs Minister of India"
+        ],
+        "responses": [
+          "Dr. Subrahmanyam Jaishankar is the Minister of External Affairs.",
+          "The Ministry of External Affairs is led by Dr. Subrahmanyam Jaishankar.",
+          "Dr. Subrahmanyam Jaishankar is responsible for the Ministry of External Affairs."
+        ]
+      },
+      {
+        "tag": "Ministry of Agriculture & Farmers Welfare",
+        "patterns": [
+          "Who is the Agriculture Minister?",
+          "Who is the Minister of Agriculture & Farmers Welfare?",
+          "Who heads the Ministry of Agriculture?",
+          "Agriculture Minister of India"
+        ],
+        "responses": [
+          "Shri Shivraj Singh Chouhan is the Minister of Agriculture & Farmers Welfare.",
+          "The Ministry of Agriculture & Farmers Welfare is headed by Shri Shivraj Singh Chouhan.",
+          "Shri Shivraj Singh Chouhan oversees the Ministry of Agriculture & Farmers Welfare."
+        ]
+      },
+      {
+        "tag": "Ministry of Railways",
+        "patterns": [
+          "Who is the Railway Minister?",
+          "Who is the Minister of Railways?",
+          "Who leads the Ministry of Railways?",
+          "Railway Minister of India"
+        ],
+        "responses": [
+          "Shri Ashwini Vaishnaw is the Minister of Railways.",
+          "The Ministry of Railways is led by Shri Ashwini Vaishnaw.",
+          "Shri Ashwini Vaishnaw is in charge of the Ministry of Railways."
+        ]
+      },
+      {
+        "tag": "Ministry of Women and Child Development",
+        "patterns": [
+          "Who is the Women and Child Development Minister?",
+          "Who is the Minister of Women and Child Development?",
+          "Who leads the Ministry of Women and Child Development?",
+          "Women and Child Development Minister of India"
+        ],
+        "responses": [
+          "Smt. Annpurna Devi is the Minister of Women and Child Development.",
+          "The Ministry of Women and Child Development is led by Smt. Annpurna Devi.",
+          "Smt. Annpurna Devi is in charge of the Ministry of Women and Child Development."
+        ]
+      },
+      {
+        "tag": "Ministry of Commerce and Industry",
+        "patterns": [
+          "Who is the Commerce Minister?",
+          "Who is the Minister of Commerce and Industry?",
+          "Who heads the Ministry of Commerce?",
+          "Commerce Minister of India"
+        ],
+        "responses": [
+          "Shri Piyush Goyal is the Minister of Commerce and Industry.",
+          "The Ministry of Commerce and Industry is headed by Shri Piyush Goyal.",
+          "Shri Piyush Goyal oversees the Ministry of Commerce and Industry."
+        ]
+      },
+      {
+        "tag": "Ministry of Education",
+        "patterns": [
+          "Who is the Education Minister?",
+          "Who is the Minister of Education?",
+          "Who leads the Ministry of Education?",
+          "Education Minister of India"
+        ],
+        "responses": [
+          "Shri Dharmendra Pradhan is the Minister of Education.",
+          "The Ministry of Education is led by Shri Dharmendra Pradhan.",
+          "Shri Dharmendra Pradhan is responsible for the Ministry of Education."
+        ]
+      }
+    
 
 ]}
