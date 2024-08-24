@@ -1,0 +1,15 @@
+{"intents": [
+    {"tag": "greetings", 
+    "patterns": ["hello", "hi", "hey", "how are you", "Greeings", "what's up", "how is it going?"],
+    "responses": ["hello", "Hey!", "How can I assist you today?", "What can I do for you today?"]
+    },
+    
+    {"tag": "goodbye", 
+    "patterns": ["goodbye", "bye", "see you later", "farewell", "take care"],
+    "responses": ["Goodbye!", "See you later!", "Take care!", "Farewell!"]
+    },
+    {"tag": "Leaders", 
+    "patterns": ["Who is the prime minister of the country?", "Who is the prime minister of India", "Prime minister"],
+    "responses": ["Sir Narendra Damodardas Modi", "Mr. Narendra Modi", "Prime minister of India is Mr.Narendra Modi"]}
+
+]}
