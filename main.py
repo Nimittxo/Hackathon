@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 import nltk
-from nltk.tokenize import word_tokenize
+from nltk.tokenize import word_tokenizeHello
 from nltk.stem import WordNetLemmatizer
 
 \
@@ -45,16 +45,17 @@ def predict_class(sentence):
     return return_list
 
 def get_response(intents_list, intents_json):
-    if not intents_list:
+    if not intents_list or float(intents_list[0]['probability']) < 0.5:
         return "I'm not sure how to respond to that. Can you please rephrase or ask something else?"
     
     tag = intents_list[0]['intent']
     list_of_intents = intents_json['intents']
     for i in list_of_intents:
-        if i['tag'] == tag:
+        if i['tag'].lower() == tag.lower():
             result = random.choice(i['responses'])
-            break
-    return result
+            return result
+    
+    return "I'm having trouble finding the right information. Could you try asking in a different way?"
 
 print("Chatbot is ready to chat! (Type 'quit' to exit)")
 
