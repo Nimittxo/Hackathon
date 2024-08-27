@@ -16,7 +16,7 @@ with open('intents.json', 'r') as file:
     intents = json.load(file)
 words = pickle.load(open('words.pkl', 'rb'))
 classes = pickle.load(open('classes.pkl', 'rb'))
-model = load_model('chatbot_model_advanced.h5')
+model = load_model('chatbot_model_advanced.keras')
 
 def clean_up_sentence(sentence):
     sentence_words = word_tokenize(sentence)
