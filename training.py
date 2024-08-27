@@ -91,4 +91,4 @@ test_loss, test_accuracy = model.evaluate(X_test, y_test_encoded)
 print(f"Test accuracy: {test_accuracy:.4f}")
 
 # Save the model
-model.save('chatbot_model_advanced.keras')
+model.save('chatbot_model_advanced.h5')
